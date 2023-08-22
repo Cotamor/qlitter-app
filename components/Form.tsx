@@ -4,6 +4,8 @@ import Button from './Button'
 import useLoginModal from '@/hooks/useLoginModal'
 import useRegisterModal from '@/hooks/useRegisterModal'
 import useCurrentUser from '@/hooks/useCurrentUser'
+import { toast } from 'react-hot-toast'
+import axios from 'axios'
 
 interface FormProps {
   placeholder: string
@@ -12,27 +14,44 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
-  const loginModal = useLoginModal()
   const registerModal = useRegisterModal()
+  const loginModal = useLoginModal()
 
   const { data: currentUser } = useCurrentUser()
-  console.log(currentUser, 'CurrentUser')
-  const [isLoading, setIsLoading] = useState(false)
-  const [body, setBody] = useState('')
 
-  const onSubmit = useCallback(() => {
-    console.log(body)
-  }, [body])
+  const [body, setBody] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onSubmit = useCallback(async() => {
+    try {
+      setIsLoading(true)
+
+      const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts'
+
+      await axios.post(url, {body})
+
+      toast.success('Tweet created')
+      setBody('')
+
+    } catch (error) {
+      toast.error('Something went wrong')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [body, isComment, postId])
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
       {currentUser ? (
         <div className="flex flex-row gap-4">
-          <div className="">{/* <Avatar userId={currentUser.id} /> */}</div>
+          <div className="">
+            <Avatar userId={currentUser.id} />
+          </div>
           <div className="w-full">
             <textarea
               disabled={isLoading}
               onChange={(e) => setBody(e.target.value)}
+              value={body}
               className="
                 disabled:opacity-80
                 peer
@@ -46,6 +65,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
                 placeholder-neutral-500
                 text-white
               "
+              placeholder={placeholder}
             ></textarea>
             <hr
               className="
@@ -58,7 +78,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
               "
             />
             <div className="mt-4 flex flex-row justify-end">
-              <Button disabled={isLoading} onClick={onSubmit} label="Tweet" />
+              <Button disabled={isLoading || !body} onClick={onSubmit} label="Tweet" />
             </div>
           </div>
         </div>
