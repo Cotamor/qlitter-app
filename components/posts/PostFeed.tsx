@@ -10,7 +10,7 @@ const PostFeed: React.FC<PostFeedProps> = ({ userId }) => {
     {
       id: 1,
       user: {
-        id: 1,
+        id: '64e22e07a76e02f0f71b237a',
         name: 'john',
         username: 'blueshark',
       },
@@ -20,8 +20,9 @@ const PostFeed: React.FC<PostFeedProps> = ({ userId }) => {
 
   return (
     <div>
+      post
       {posts.map((post) => (
-        <PostItem key={post.id} data={post} />
+        <PostItem key={post.id} data={post} userId={userId} />
       ))}
     </div>
   )

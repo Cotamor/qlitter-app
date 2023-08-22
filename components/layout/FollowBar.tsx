@@ -14,7 +14,7 @@ const FollowBar = () => {
         <h2 className="text-white text-xl font-semibold">Who to Follow</h2>
         <div className="flex flex-col gap-6 mt-4">
           <div className="flex flex-row items-center gap-4">
-            <Avatar userId={testUser.id} />
+            {/* <Avatar userId={testUser.id} /> */}
             <div className="flex flex-col">
               <p className="text-white font-semibold text-sm">
                 {testUser.name}
@@ -23,7 +23,7 @@ const FollowBar = () => {
             </div>
           </div>
           <div className="flex flex-row items-center gap-4">
-            <Avatar userId={testUser.id} />
+            {/* <Avatar userId={testUser.id} /> */}
             <div className="flex flex-col">
               <p className="text-white font-semibold text-sm">
                 {testUser.name}
@@ -32,7 +32,7 @@ const FollowBar = () => {
             </div>
           </div>
           <div className="flex flex-row items-center gap-4">
-            <Avatar userId={testUser.id} />
+            {/* <Avatar userId={testUser.id} /> */}
             <div className="flex flex-col">
               <p className="text-white font-semibold text-sm">
                 {testUser.name}
