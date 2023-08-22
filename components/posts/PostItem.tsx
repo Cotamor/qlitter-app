@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import Avatar from '../Avatar'
 import { AiOutlineMessage, AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
+import { useCallback } from 'react'
+import useLoginModal from '@/hooks/useLoginModal'
 
 interface PostItemProps {
   data: Record<string, any>
@@ -9,18 +11,22 @@ interface PostItemProps {
 
 const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
   const router = useRouter()
+  const loginModal = useLoginModal()
 
   // temporary
   const hasLiked = false
   const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart
 
-  const goToPost = () => {
-    router.push(`/posts/${data.id}`)
-  }
-
-  const goToUser = () => {
+  
+  const goToUser = useCallback((ev:any) => {
+    ev.stopPropagation()
     router.push(`/users/${data.user.id}`)
-  }
+  },[data.user.id, router])
+
+  const goToPost = useCallback((ev: any) => {
+    ev.stopPropagation()
+    router.push(`/posts/${data.id}`)
+  },[data.id, router])
 
   return (
     <div
