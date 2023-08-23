@@ -3,6 +3,7 @@ import NotificationsFeed from '@/components/NotificationsFeed'
 import { NextPageContext } from 'next'
 import { getSession } from 'next-auth/react'
 
+// for protection route
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context)
 

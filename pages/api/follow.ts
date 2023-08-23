@@ -36,8 +36,26 @@ export default async function handler(
       updatedFollowingIds.push(userId)
 
       // NOTIFICATION PART START
-      // **********************
-      // **********************
+      try {
+        await prisma.notification.create({
+          data: {
+            body: 'Someone followed you!',
+            userId,
+          },
+        })
+
+        await prisma.user.update({
+          where: {
+            id: userId,
+          },
+          data: {
+            hasNotification: true,
+          },
+        })
+      } catch (error) {
+        console.log(error, 'NOTIFICATION_FOLLOW_API')
+      }
+
       // NOTIFICATION PART END
     }
 
