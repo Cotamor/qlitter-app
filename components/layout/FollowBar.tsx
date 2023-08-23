@@ -1,11 +1,12 @@
-import Avatar from '../Avatar'
+import useUsers from '@/hooks/useUsers'
+import { useRouter } from 'next/router'
+import FollowBarItem from './FollowBarItem'
 
 const FollowBar = () => {
-  // temporary
-  const testUser = {
-    id: '1',
-    name: 'john',
-    username: '@blueshark',
+  const { data: users = [] } = useUsers()
+
+  if (users.length === 0) {
+    return null
   }
 
   return (
@@ -13,33 +14,7 @@ const FollowBar = () => {
       <div className="bg-neutral-800 rounded-xl p-4">
         <h2 className="text-white text-xl font-semibold">Who to Follow</h2>
         <div className="flex flex-col gap-6 mt-4">
-          <div className="flex flex-row items-center gap-4">
-            {/* <Avatar userId={testUser.id} /> */}
-            <div className="flex flex-col">
-              <p className="text-white font-semibold text-sm">
-                {testUser.name}
-              </p>
-              <p className="text-neutral-400 text-sm">{testUser.username}</p>
-            </div>
-          </div>
-          <div className="flex flex-row items-center gap-4">
-            {/* <Avatar userId={testUser.id} /> */}
-            <div className="flex flex-col">
-              <p className="text-white font-semibold text-sm">
-                {testUser.name}
-              </p>
-              <p className="text-neutral-400 text-sm">{testUser.username}</p>
-            </div>
-          </div>
-          <div className="flex flex-row items-center gap-4">
-            {/* <Avatar userId={testUser.id} /> */}
-            <div className="flex flex-col">
-              <p className="text-white font-semibold text-sm">
-                {testUser.name}
-              </p>
-              <p className="text-neutral-400 text-sm">{testUser.username}</p>
-            </div>
-          </div>
+        <FollowBarItem data={users} />
         </div>
       </div>
     </div>
